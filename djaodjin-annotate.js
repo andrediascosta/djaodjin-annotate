@@ -752,6 +752,21 @@ MIT License
         callback(image);
       }
       self.options.onExport(image);
+    },
+    saveImage: function(options, callback) {
+      var self = this;
+      if (self.$textbox.is(':visible')) self.pushText();
+      var image_data = self.baseCanvas.toDataURL(options.type, options.quality);
+
+      $.ajax({
+        url:        options.remote.url,
+        dataType:   "script",
+        type:       "put",
+        data:       {image: {id: options.remote.image_id, data: image_data}}
+      });
+
+      if (callback) callback(image_data);
+      self.options.onSave(image_data);
     }
   };
   $.fn.annotate = function(options, cmdOption, callback) {
@@ -770,7 +785,6 @@ MIT License
         throw new Error('No annotate initialized for: #' + $(this).attr(
           'id'));
       }
-    
     }else if (options === 'fill') {
       if ($annotate) {
         $annotate.addElements(cmdOption, true, callback);
@@ -778,13 +792,19 @@ MIT License
         throw new Error('No annotate initialized for: #' + $(this).attr(
           'id'));
       }
-    
     } else if (options === 'export') {
       if ($annotate) {
         $annotate.exportImage(cmdOption, callback);
       } else {
         throw new Error('No annotate initialized for: #' + $(this).attr(
           'id'));
+      }
+    } else if (options === 'save') {
+      if ($annotate) {
+        $annotate.saveImage(cmdOption, callback);
+      } else {
+        throw new Error('No annotate initialized for: #' + $(this).attr(
+            'id'));
       }
     } else {
       var opts = $.extend({}, $.fn.annotate.defaults, options);
@@ -807,6 +827,9 @@ MIT License
     unselectTool: false,
     onExport: function(image) {
       console.log(image);
+    },
+    onSave: function(image_data) {
+      console.log('Sent image to remote');
     }
   };
 })(jQuery);

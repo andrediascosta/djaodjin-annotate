@@ -9,9 +9,9 @@
 <link rel="stylesheet" type="text/css" href="css/annotate.css">
 <body>
 	<div class="my-image-selector">
-	<button class="push-new-image">Push a new image!</button>
-	<button class="export-image">Export image</button>
-
+		<button class="push-new-image">Push a new image!</button>
+		<button class="export-image">Export image</button>
+		<button class="save-image-btn btn btn-primary">Save Image</button>
 	</div>
 
 	<div style="margin-top:50px">
@@ -51,6 +51,16 @@
 				$('#myCanvas').annotate("export", {type: "image/jpeg", quality: 0.2},function(d){
 					console.log(d);
 				});
+			});
+
+			$(".save-image-btn").on('click', function() {
+				$('#myCanvas').annotate("save",
+					{
+						type: "image/png",
+						quality: 1,
+						remote: {url: ':resource/:id', image_id: $("input[name='image-selector']").attr('id')}
+					}
+				);
 			});
 		});
 	</script>
