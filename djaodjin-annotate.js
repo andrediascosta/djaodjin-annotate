@@ -1,5 +1,5 @@
 /*
-djaodjin-annotate.js v0.0.4
+djaodjin-annotate.js v0.0.5
 Copyright (c) 2015, Djaodjin Inc.
 MIT License
 */

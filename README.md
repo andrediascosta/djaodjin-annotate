@@ -97,6 +97,18 @@ Returns the image in Data URI format.
 }
 ```
 
+### Save image to remote
+
+```javascript
+$('#myCanvas').annotate("save",
+	{
+		type: "image/png",
+		quality: 1,
+		remote: {url: ':resource/:id', image_id: $("input[name='image-selector']").attr('id')}
+	}
+);
+```
+
 ### Events
 
 * ```annotate-image-added```: Fired when an image is initialized (plugin initialization or when a new image is pushed). Can be used to build image selector.
@@ -119,6 +131,10 @@ Thank you to @Josephdias92 for the initial work on this.
 
 
 #Release notes
+
+###v0.0.5
+
+- Ability to send image to remote server
 
 ###v0.0.4
 
